@@ -1,7 +1,3 @@
-// hem file hem folder bulunamama case i.
-// detaylar: file ı folderda folderı file de bulma. İlk hali
-// Aynı dosyaya koyma
-// Yapılan değişiklik detayını ver
 import move from './move';
 
 describe('move', () => {
@@ -44,12 +40,10 @@ describe('move', () => {
       },
     ];
 
-    expect(() => {
-      move(list, '4', '6');
-    }).toStrictEqual(result);
+    expect(move(list, '4', '6')).toStrictEqual(result);
   });
-
-  it('throws error if given source is not a file', () => {
+  // if file with given id is not found
+  it('throws error if given source does not exist', () => {
     const list = [
       {
         id: '1',
@@ -59,12 +53,10 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [] },
     ];
 
-    expect(() => {
-      move(list, '3', '1');
-    }).toThrow('You cannot move a folder');
+    expect(() => move(list, '3', '1')).toThrow('There is not such a file');
   });
-
-  it('throws error if given destination is not a folder', () => {
+  // if folder with given id is not found
+  it('throws error if given destination does not', () => {
     const list = [
       {
         id: '1',
@@ -74,12 +66,10 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [{ id: '4', name: 'File 2' }] },
     ];
 
-    expect(() => {
-      move(list, '2', '4');
-    }).toThrow('You cannot specify a file as the destination');
+    expect(() => move(list, '2', '4')).toThrow('There is not such a folder');
   });
-
-  it('throws error if given destination is the files current destionation', () => {
+  // if destination is file's current destination
+  it('throws error if given destination is the files current destination', () => {
     const list = [
       {
         id: '1',
@@ -89,8 +79,6 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [{ id: '4', name: 'File 2' }] },
     ];
 
-    expect(() => {
-      move(list, '2', '1');
-    }).toThrow('You cannot move a file to the same destination');
+    expect(() => move(list, '2', '1')).toThrow('You cannot move file to the same destination');
   });
 });
